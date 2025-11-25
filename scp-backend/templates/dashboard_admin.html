@@ -1,0 +1,63 @@
+﻿{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h2>Admin Dashboard</h2>
+  <p>Welcome, {{ current_user.username }}!</p>
+  
+  <h3>Management Sections</h3>
+  <div style="margin:20px 0;">
+    <a href="{{ url_for('add_camera') }}" style="background:#111; color:#fff; padding:10px 20px; border-radius:4px; text-decoration:none; display:inline-block; margin-right:10px;">+ Add Camera</a>
+    <a href="{{ url_for('add_object') }}" style="background:#111; color:#fff; padding:10px 20px; border-radius:4px; text-decoration:none; display:inline-block; margin-right:10px;">+ Add Object</a>
+    <a href="{{ url_for('add_event') }}" style="background:#111; color:#fff; padding:10px 20px; border-radius:4px; text-decoration:none; display:inline-block;">+ Log Event</a>
+  </div>
+
+  <h3>Cameras</h3>
+  <table style="width:100%; border-collapse:collapse; background:#f9f9f9;">
+    <tr style="background:#ddd; font-weight:bold;">
+      <td style="padding:10px; border:1px solid #999;">Name</td>
+      <td style="padding:10px; border:1px solid #999;">Type</td>
+      <td style="padding:10px; border:1px solid #999;">Capacity</td>
+      <td style="padding:10px; border:1px solid #999;">Actions</td>
+    </tr>
+    {% if cameras %}
+      {% for camera in cameras %}
+      <tr>
+        <td style="padding:10px; border:1px solid #ccc;">{{ camera.name }}</td>
+        <td style="padding:10px; border:1px solid #ccc;">{{ camera.type or '-' }}</td>
+        <td style="padding:10px; border:1px solid #ccc;">{{ camera.max_capacity }}</td>
+        <td style="padding:10px; border:1px solid #ccc;">
+          <a href="{{ url_for('edit_camera', camera_id=camera.id) }}">Edit</a> | 
+          <a href="{{ url_for('delete_camera', camera_id=camera.id) }}">Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    {% else %}
+      <tr><td colspan="4" style="padding:10px; text-align:center;">No cameras</td></tr>
+    {% endif %}
+  </table>
+
+  <h3>Objects</h3>
+  <table style="width:100%; border-collapse:collapse; background:#f9f9f9; margin-top:20px;">
+    <tr style="background:#ddd; font-weight:bold;">
+      <td style="padding:10px; border:1px solid #999;">Name</td>
+      <td style="padding:10px; border:1px solid #999;">Classification</td>
+      <td style="padding:10px; border:1px solid #999;">Status</td>
+      <td style="padding:10px; border:1px solid #999;">Actions</td>
+    </tr>
+    {% if objects %}
+      {% for obj in objects %}
+      <tr>
+        <td style="padding:10px; border:1px solid #ccc;">{{ obj.name }}</td>
+        <td style="padding:10px; border:1px solid #ccc;">{{ obj.classification }}</td>
+        <td style="padding:10px; border:1px solid #ccc;">{{ obj.status }}</td>
+        <td style="padding:10px; border:1px solid #ccc;">
+          <a href="{{ url_for('edit_object', object_id=obj.id) }}">Edit</a>
+        </td>
+      </tr>
+      {% endfor %}
+    {% else %}
+      <tr><td colspan="4" style="padding:10px; text-align:center;">No objects</td></tr>
+    {% endif %}
+  </table>
+</div>
+{% endblock %}

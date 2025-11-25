@@ -1,0 +1,29 @@
+﻿{% extends "base.html" %}
+{% block content %}
+<div class="card form">
+  <h2>Add Object to Containment</h2>
+  <form method="POST">
+    {{ form.hidden_tag() }}
+    {{ form.name.label }}
+    {{ form.name() }}
+    <label>Classification</label>
+    <select name="classification" style="width:100%; padding:10px; margin:8px 0;">
+      <option value="Safe">Safe</option>
+      <option value="Dangerous">Dangerous</option>
+      <option value="Paranormal">Paranormal</option>
+    </select>
+    {{ form.description.label }}
+    {{ form.description() }}
+    {{ form.storage_requirements.label }}
+    {{ form.storage_requirements() }}
+    <label>Camera/Containment Unit</label>
+    <select name="camera_id" style="width:100%; padding:10px; margin:8px 0;">
+      <option value="">-- Select Camera --</option>
+      {% for camera in cameras %}
+        <option value="{{ camera.id }}">{{ camera.name }}</option>
+      {% endfor %}
+    </select>
+    {{ form.submit(value="Add Object") }}
+  </form>
+</div>
+{% endblock %}

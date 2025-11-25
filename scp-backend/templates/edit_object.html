@@ -1,0 +1,29 @@
+﻿{% extends "base.html" %}
+{% block content %}
+<div class="card form">
+  <h2>Edit Object</h2>
+  <form method="POST">
+    {{ form.hidden_tag() }}
+    {{ form.name.label }}
+    {{ form.name() }}
+    <label>Classification</label>
+    <select name="classification" style="width:100%; padding:10px; margin:8px 0;">
+      <option value="Safe" {% if obj.classification == "Safe" %}selected{% endif %}>Safe</option>
+      <option value="Dangerous" {% if obj.classification == "Dangerous" %}selected{% endif %}>Dangerous</option>
+      <option value="Paranormal" {% if obj.classification == "Paranormal" %}selected{% endif %}>Paranormal</option>
+    </select>
+    {{ form.description.label }}
+    {{ form.description() }}
+    {{ form.storage_requirements.label }}
+    {{ form.storage_requirements() }}
+    <label>Camera ID (optional)</label>
+    <select name="camera_id" style="width:100%; padding:10px; margin:8px 0;">
+      <option value="">-- Select Camera --</option>
+      {% for camera in cameras %}
+        <option value="{{ camera.id }}" {% if obj.camera_id == camera.id %}selected{% endif %}>{{ camera.name }}</option>
+      {% endfor %}
+    </select>
+    {{ form.submit() }}
+  </form>
+</div>
+{% endblock %}

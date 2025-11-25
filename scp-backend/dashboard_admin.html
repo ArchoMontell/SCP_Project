@@ -1,0 +1,92 @@
+﻿{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h2>Admin Dashboard</h2>
+  <p>Welcome, {{ current_user.username }}!</p>
+  
+  <h3>Management Sections</h3>
+  <div style="margin:20px 0;">
+    <a href="{{ url_for('add_camera') }}" style="background:#111; color:#fff; padding:10px 20px; border-radius:4px; text-decoration:none; display:inline-block; margin-right:10px;">+ Add Camera</a>
+    <a href="{{ url_for('add_object') }}" style="background:#111; color:#fff; padding:10px 20px; border-radius:4px; text-decoration:none; display:inline-block; margin-right:10px;">+ Add Object</a>
+    <a href="{{ url_for('add_event') }}" style="background:#111; color:#fff; padding:10px 20px; border-radius:4px; text-decoration:none; display:inline-block;">+ Log Event</a>
+  </div>
+
+  <h3>Cameras ({{ cameras|length }})</h3>
+  <table style="width:100%; border-collapse:collapse; background:#f9f9f9;">
+    <tr style="background:#ddd; font-weight:bold;">
+      <td style="padding:10px; border:1px solid #999;">Name</td>
+      <td style="padding:10px; border:1px solid #999;">Type</td>
+      <td style="padding:10px; border:1px solid #999;">Capacity</td>
+      <td style="padding:10px; border:1px solid #999;">Security</td>
+      <td style="padding:10px; border:1px solid #999;">Actions</td>
+    </tr>
+    {% if cameras %}
+      {% for camera in cameras %}
+      <tr>
+        <td style="padding:10px; border:1px solid #ccc;">{{ camera.name }}</td>
+        <td style="padding:10px; border:1px solid #ccc;">{{ camera.type or '-' }}</td>
+        <td style="padding:10px; border:1px solid #ccc;">{{ camera.max_capacity }}</td>
+        <td style="padding:10px; border:1px solid #ccc;">{{ camera.security_level }}/5</td>
+        <td style="padding:10px; border:1px solid #ccc;">
+          <a href="{{ url_for('edit_camera', camera_id=camera.id) }}">Edit</a> | 
+          <a href="{{ url_for('delete_camera', camera_id=camera.id) }}" onclick="return confirm(''Are you sure?'');">Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    {% else %}
+      <tr><td colspan="5" style="padding:10px; text-align:center;">No cameras yet</td></tr>
+    {% endif %}
+  </table>
+
+  <h3>Objects ({{ objects|length }})</h3>
+  <table style="width:100%; border-collapse:collapse; background:#f9f9f9; margin-top:20px;">
+    <tr style="background:#ddd; font-weight:bold;">
+      <td style="padding:10px; border:1px solid #999;">Name</td>
+      <td style="padding:10px; border:1px solid #999;">Classification</td>
+      <td style="padding:10px; border:1px solid #999;">Camera</td>
+      <td style="padding:10px; border:1px solid #999;">Status</td>
+      <td style="padding:10px; border:1px solid #999;">Actions</td>
+    </tr>
+    {% if objects %}
+      {% for obj in objects %}
+      <tr>
+        <td style="padding:10px; border:1px solid #ccc;">{{ obj.name }}</td>
+        <td style="padding:10px; border:1px solid #ccc;">
+          <span style="background:{% if obj.classification == 'Safe' %}#90EE90{% elif obj.classification == 'Dangerous' %}#FFB6C6{% else %}#DDA0DD{% endif %}; padding:5px 10px; border-radius:3px;">{{ obj.classification }}</span>
+        </td>
+        <td style="padding:10px; border:1px solid #ccc;">{{ obj.camera_id or '-' }}</td>
+        <td style="padding:10px; border:1px solid #ccc;">{{ obj.status }}</td>
+        <td style="padding:10px; border:1px solid #ccc;">
+          <a href="{{ url_for('edit_object', object_id=obj.id) }}">Edit</a> | 
+          <a href="{{ url_for('delete_object', object_id=obj.id) }}" onclick="return confirm(''Are you sure?'');">Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    {% else %}
+      <tr><td colspan="5" style="padding:10px; text-align:center;">No objects yet</td></tr>
+    {% endif %}
+  </table>
+
+  <h3>Events Log (Last 10)</h3>
+  <table style="width:100%; border-collapse:collapse; background:#f9f9f9; margin-top:20px;">
+    <tr style="background:#ddd; font-weight:bold;">
+      <td style="padding:10px; border:1px solid #999;">Type</td>
+      <td style="padding:10px; border:1px solid #999;">User</td>
+      <td style="padding:10px; border:1px solid #999;">Timestamp</td>
+      <td style="padding:10px; border:1px solid #999;">Notes</td>
+    </tr>
+    {% if events %}
+      {% for event in events[-10:] %}
+      <tr>
+        <td style="padding:10px; border:1px solid #ccc;">{{ event.type }}</td>
+        <td style="padding:10px; border:1px solid #ccc;">User #{{ event.user_id }}</td>
+        <td style="padding:10px; border:1px solid #ccc;">{{ event.timestamp.strftime(''%Y-%m-%d %H:%M'') }}</td>
+        <td style="padding:10px; border:1px solid #ccc;">{{ event.notes or '-' }}</td>
+      </tr>
+      {% endfor %}
+    {% else %}
+      <tr><td colspan="4" style="padding:10px; text-align:center;">No events yet</td></tr>
+    {% endif %}
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,36 @@
+﻿{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h2>{{ camera.name }}</h2>
+  <p><strong>Type:</strong> {{ camera.type or "Not specified" }}</p>
+  <p><strong>Max Capacity:</strong> {{ camera.max_capacity }}</p>
+  <p><strong>Security Level:</strong> {{ camera.security_level }}/5</p>
+  {% if camera.description %}
+    <p><strong>Description:</strong> {{ camera.description }}</p>
+  {% endif %}
+  
+  <h3>Objects in this Camera</h3>
+  <table style="width:100%; border-collapse:collapse; background:#f9f9f9;">
+    <tr style="background:#ddd; font-weight:bold;">
+      <td style="padding:10px; border:1px solid #999;">Name</td>
+      <td style="padding:10px; border:1px solid #999;">Classification</td>
+      <td style="padding:10px; border:1px solid #999;">Status</td>
+    </tr>
+    {% if objects %}
+      {% for obj in objects %}
+      <tr>
+        <td style="padding:10px; border:1px solid #ccc;">{{ obj.name }}</td>
+        <td style="padding:10px; border:1px solid #ccc;">{{ obj.classification }}</td>
+        <td style="padding:10px; border:1px solid #ccc;">{{ obj.status }}</td>
+      </tr>
+      {% endfor %}
+    {% else %}
+      <tr><td colspan="3" style="padding:10px; text-align:center;">No objects in this camera</td></tr>
+    {% endif %}
+  </table>
+  
+  <p style="margin-top:20px;">
+    <a href="{{ url_for('user_dashboard') }}" style="background:#111; color:#fff; padding:10px 20px; border-radius:4px; text-decoration:none;">Back to Dashboard</a>
+  </p>
+</div>
+{% endblock %}
