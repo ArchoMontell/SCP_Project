@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, flash, request
 from config import Config
 from models import db, User, Camera, ObjectItem, Event
-from forms import RegisterForm, LoginForm, CameraForm, ObjectForm, EventForm
+from forms import RegisterForm, LoginForm, CameraForm, ObjectForm, EventForm, AdminUserForm
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from datetime import datetime
 import os
@@ -19,6 +19,18 @@ def create_app():
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(int(user_id))
+
+    # Camera type -> default security level mapping
+    CAMERA_SECURITY_MAP = {
+        'Containment': 5,
+        'SecureVault': 5,
+        'Keter': 5,
+        'Euclid': 4,
+        'Surveillance': 2,
+        'Laboratory': 3,
+        'Mobile': 1,
+        'External': 1,
+    }
 
     # Routes
 
@@ -96,11 +108,12 @@ def create_app():
             return redirect(url_for('user_dashboard'))
         form = CameraForm()
         if form.validate_on_submit():
+            sec = CAMERA_SECURITY_MAP.get(form.type.data, form.security_level.data)
             camera = Camera(
                 name=form.name.data,
                 type=form.type.data,
                 max_capacity=form.max_capacity.data,
-                security_level=form.security_level.data,
+                security_level=sec,
                 equipment_list=form.equipment_list.data,
                 cleaning_schedule=form.cleaning_schedule.data,
                 maintenance_schedule=form.maintenance_schedule.data
@@ -123,7 +136,7 @@ def create_app():
             camera.name = form.name.data
             camera.type = form.type.data
             camera.max_capacity = form.max_capacity.data
-            camera.security_level = form.security_level.data
+            camera.security_level = CAMERA_SECURITY_MAP.get(form.type.data, form.security_level.data)
             camera.equipment_list = form.equipment_list.data
             camera.cleaning_schedule = form.cleaning_schedule.data
             camera.maintenance_schedule = form.maintenance_schedule.data
@@ -161,19 +174,20 @@ def create_app():
             return redirect(url_for('user_dashboard'))
         form = ObjectForm()
         cameras = Camera.query.all()
+        form.camera_id.choices = [(0, '-- Select Camera --')] + [(c.id, c.name) for c in cameras]
         if form.validate_on_submit():
             obj = ObjectItem(
                 name=form.name.data,
-                classification=request.form.get('classification', 'Safe'),
+                classification=form.classification.data,
                 description=form.description.data,
                 storage_requirements=form.storage_requirements.data,
-                camera_id=form.camera_id.data if form.camera_id.data else None
+                camera_id=form.camera_id.data if form.camera_id.data and form.camera_id.data != 0 else None
             )
             db.session.add(obj)
             db.session.commit()
             flash('Object created successfully!', 'success')
             return redirect(url_for('admin_dashboard'))
-        return render_template('add_object.html', form=form, cameras=cameras)
+        return render_template('add_object.html', form=form)
 
     @app.route('/admin/object/edit/<int:object_id>', methods=['GET', 'POST'])
     @login_required
@@ -184,21 +198,23 @@ def create_app():
         obj = ObjectItem.query.get_or_404(object_id)
         form = ObjectForm()
         cameras = Camera.query.all()
+        form.camera_id.choices = [(0, '-- Select Camera --')] + [(c.id, c.name) for c in cameras]
         if form.validate_on_submit():
             obj.name = form.name.data
-            obj.classification = request.form.get('classification', obj.classification)
+            obj.classification = form.classification.data
             obj.description = form.description.data
             obj.storage_requirements = form.storage_requirements.data
-            obj.camera_id = form.camera_id.data if form.camera_id.data else None
+            obj.camera_id = form.camera_id.data if form.camera_id.data and form.camera_id.data != 0 else None
             db.session.commit()
             flash('Object updated successfully!', 'success')
             return redirect(url_for('admin_dashboard'))
         elif request.method == 'GET':
             form.name.data = obj.name
+            form.classification.data = obj.classification
             form.description.data = obj.description
             form.storage_requirements.data = obj.storage_requirements
-            form.camera_id.data = obj.camera_id
-        return render_template('edit_object.html', form=form, obj=obj, cameras=cameras)
+            form.camera_id.data = obj.camera_id if obj.camera_id else 0
+        return render_template('edit_object.html', form=form, obj=obj)
 
     @app.route('/admin/object/delete/<int:object_id>')
     @login_required
@@ -253,19 +269,20 @@ def create_app():
     def user_add_object():
         form = ObjectForm()
         cameras = Camera.query.all()
+        form.camera_id.choices = [(0, '-- Select Camera --')] + [(c.id, c.name) for c in cameras]
         if form.validate_on_submit():
             obj = ObjectItem(
                 name=form.name.data,
-                classification=request.form.get('classification', 'Safe'),
+                classification=form.classification.data,
                 description=form.description.data,
                 storage_requirements=form.storage_requirements.data,
-                camera_id=form.camera_id.data if form.camera_id.data else None
+                camera_id=form.camera_id.data if form.camera_id.data and form.camera_id.data != 0 else None
             )
             db.session.add(obj)
             db.session.commit()
             flash('Object added successfully!', 'success')
             return redirect(url_for('user_dashboard'))
-        return render_template('user_add_object.html', form=form, cameras=cameras)
+        return render_template('user_add_object.html', form=form)
 
     # Admin creation helper (only when run directly) - optional
     @app.cli.command('create-admin')
@@ -282,6 +299,29 @@ def create_app():
         db.session.add(admin)
         db.session.commit()
         print('Admin created.')
+
+    # Admin: edit user (role + access_level)
+    @app.route('/admin/user/edit/<int:user_id>', methods=['GET', 'POST'])
+    @login_required
+    def edit_user(user_id):
+        if current_user.role != 'admin':
+            flash('Access denied.', 'danger')
+            return redirect(url_for('user_dashboard'))
+        user = User.query.get_or_404(user_id)
+        form = AdminUserForm()
+        if form.validate_on_submit():
+            user.role = form.role.data
+            try:
+                user.access_level = int(form.access_level.data)
+            except Exception:
+                user.access_level = 0
+            db.session.commit()
+            flash('User updated.', 'success')
+            return redirect(url_for('admin_dashboard'))
+        elif request.method == 'GET':
+            form.role.data = user.role
+            form.access_level.data = user.access_level
+        return render_template('edit_user.html', form=form, user=user)
 
     return app
 
