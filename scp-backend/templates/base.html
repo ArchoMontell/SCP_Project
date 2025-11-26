@@ -146,6 +146,27 @@
     .mt-20 { margin-top: 20px; }
     .mt-30 { margin-top: 30px; }
     .mb-20 { margin-bottom: 20px; }
+    table {
+      width: 100%; border-collapse: collapse;
+      background: #0a0e27; margin: 16px 0;
+      border: 1px solid #ffd70044;
+    }
+    table thead {
+      background: linear-gradient(90deg, #1a1a2e 0%, #16213e 100%);
+    }
+    table th {
+      padding: 12px; border: 1px solid #ffd70066;
+      color: #ffd700; font-weight: 600; text-align: left;
+      background: #1a1f3a;
+    }
+    table td {
+      padding: 12px; border: 1px solid #ffd70033;
+      color: #e0e0e0; background: #0a0e27;
+    }
+    table tbody tr:hover {
+      background: #141829;
+      border-color: #ffd70066;
+    }
     @media (max-width: 768px) {
       header .container { flex-direction: column; gap: 12px; }
       nav ul { justify-content: center; gap: 8px; }

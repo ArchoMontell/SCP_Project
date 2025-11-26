@@ -104,7 +104,7 @@ def create_app():
     @login_required
     def add_camera():
         if current_user.role != 'admin':
-            flash('Access denied.', 'danger')
+            flash('?????? ??????????.', 'danger')
             return redirect(url_for('user_dashboard'))
         form = CameraForm()
         if form.validate_on_submit():
@@ -128,7 +128,7 @@ def create_app():
     @login_required
     def edit_camera(camera_id):
         if current_user.role != 'admin':
-            flash('Access denied.', 'danger')
+            flash('?????? ??????????.', 'danger')
             return redirect(url_for('user_dashboard'))
         camera = Camera.query.get_or_404(camera_id)
         form = CameraForm()
@@ -157,7 +157,7 @@ def create_app():
     @login_required
     def delete_camera(camera_id):
         if current_user.role != 'admin':
-            flash('Access denied.', 'danger')
+            flash('?????? ??????????.', 'danger')
             return redirect(url_for('user_dashboard'))
         camera = Camera.query.get_or_404(camera_id)
         db.session.delete(camera)
@@ -170,7 +170,7 @@ def create_app():
     @login_required
     def add_object():
         if current_user.role != 'admin':
-            flash('Access denied.', 'danger')
+            flash('?????? ??????????.', 'danger')
             return redirect(url_for('user_dashboard'))
         form = ObjectForm()
         cameras = Camera.query.all()
@@ -193,7 +193,7 @@ def create_app():
     @login_required
     def edit_object(object_id):
         if current_user.role != 'admin':
-            flash('Access denied.', 'danger')
+            flash('?????? ??????????.', 'danger')
             return redirect(url_for('user_dashboard'))
         obj = ObjectItem.query.get_or_404(object_id)
         form = ObjectForm()
@@ -220,7 +220,7 @@ def create_app():
     @login_required
     def delete_object(object_id):
         if current_user.role != 'admin':
-            flash('Access denied.', 'danger')
+            flash('?????? ??????????.', 'danger')
             return redirect(url_for('user_dashboard'))
         obj = ObjectItem.query.get_or_404(object_id)
         db.session.delete(obj)
@@ -233,7 +233,7 @@ def create_app():
     @login_required
     def add_event():
         if current_user.role != 'admin':
-            flash('Access denied.', 'danger')
+            flash('?????? ??????????.', 'danger')
             return redirect(url_for('user_dashboard'))
         form = EventForm()
         if form.validate_on_submit():
@@ -305,7 +305,7 @@ def create_app():
     @login_required
     def edit_user(user_id):
         if current_user.role != 'admin':
-            flash('Access denied.', 'danger')
+            flash('?????? ??????????.', 'danger')
             return redirect(url_for('user_dashboard'))
         user = User.query.get_or_404(user_id)
         form = AdminUserForm()
