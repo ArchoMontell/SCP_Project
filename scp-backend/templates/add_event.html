@@ -1,19 +1,19 @@
 ﻿{% extends "base.html" %}
 {% block content %}
 <div class="card form">
-  <h2><i class="fas fa-clipboard-list"></i> LOG SYSTEM EVENT</h2>
-  <p style="color: #b0b0b0; font-size: 12px; margin-bottom: 20px;">Record incident, maintenance, or access event</p>
+  <h2><i class="fas fa-clipboard-list"></i> ЗАРЕЄСТРУВАТИ ПОДІЮ</h2>
+  <p style="color: #b0b0b0; font-size: 12px; margin-bottom: 20px;">Запишіть інцидент, техобслуговування або подію доступу</p>
   <form method="POST">
     {{ form.hidden_tag() }}
     
     {{ form.type.label }}
-    {{ form.type(placeholder="e.g., Containment Breach, Maintenance, Inspection") }}
+    {{ form.type(placeholder="Напр., Пробій утримання, Техобслуговування, Інспекція") }}
 
     {{ form.notes.label }}
-    {{ form.notes(placeholder="Detailed description of the event...", rows="6") }}
+    {{ form.notes(placeholder="Детальний опис події...", rows="6") }}
 
     <div style="margin-top: 20px;">
-      {{ form.submit(value="LOG EVENT") }}
+      {{ form.submit(value="ЗАРЕЄСТРУВАТИ") }}
     </div>
   </form>
 </div>

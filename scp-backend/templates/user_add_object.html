@@ -1,7 +1,7 @@
 ﻿{% extends "base.html" %}
 {% block content %}
 <div class="card form">
-  <h2>Add Object to Containment</h2>
+  <h2>Додати об'єкт до підрозділу</h2>
   <form method="POST">
     {{ form.hidden_tag() }}
     {{ form.name.label }}
@@ -14,7 +14,7 @@
     {{ form.storage_requirements() }}
     {{ form.camera_id.label }}
     {{ form.camera_id(style="width:100%; padding:10px; margin:8px 0;") }}
-    {{ form.submit(value="Add Object") }}
+    {{ form.submit(value="Додати об'єкт") }}
   </form>
 </div>
 {% endblock %}

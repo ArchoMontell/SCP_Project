@@ -1,56 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>SCP</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Фонд SCP — Система контролю зберігання</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header>
-    <div class="container">
-      <h1>SCP Foundation</h1>
-      <nav>
-        <ul>
-          <li><a href="#about">About</a></li>
-          <li><a href="#features">Features</a></li>
-          <li><a href="#contact">Contacts</a></li>
-        </ul>
+    <div class="container header-inner">
+      <h1>Фонд SCP</h1>
+      <nav class="nav">
+        <a href="#about">Про проєкт</a>
+        <a href="#features">Функції</a>
+        <a href="#contact">Контакти</a>
       </nav>
+      <button class="menu-toggle" aria-label="Open menu">☰</button>
     </div>
   </header>
 
   <main>
     <section id="about" class="section">
       <div class="container">
-        <h2>About SCP Foundation</h2>
+        <h2>Про проєкт SCP</h2>
         <p>
-          The SCP Foundation is a global organization responsible for securing, 
-          containing, and protecting anomalous objects, entities, and phenomena. 
-          Our storage facilities ensure safe containment and strict monitoring 
-          of all classified items stored within our secured chambers.
+          Фонд SCP — захищена система обліку для небезпечних, аномальних
+          та інших виняткових об'єктів. Проєкт призначений для відстеження
+          камер зберігання, предметів, подій доступу, графіків техобслуговування
+          та операцій безпеки.
         </p>
       </div>
     </section>
 
     <section id="features" class="section">
       <div class="container">
-        <h2>System Features</h2>
+        <h2>Основні функції</h2>
         <ul>
-          <li>Management of all storage chambers</li>
-          <li>Monitoring of anomalous objects and containment status</li>
-          <li>Scheduled cleaning and technical maintenance</li>
-          <li>Access control and security supervision</li>
-          <li>Reports and analytics</li>
+          <li>Керування камерами зберігання та відстеження місткості</li>
+          <li>Класифікація об'єктів (безпечні / небезпечні / аномальні)</li>
+          <li>Планування прибирання та техобслуговування</li>
+          <li>Контроль доступу та реєстрація подій безпеки</li>
+          <li>Звіти та базова аналітика</li>
         </ul>
       </div>
     </section>
 
     <section id="contact" class="section">
       <div class="container">
-        <h2>Contacts</h2>
+        <h2>Контакти</h2>
         <p>
-          For collaboration or inquiries, contact us at:  
+          Для співпраці та запитів напишіть на:
           <a href="mailto:info@scp.foundation">info@scp.foundation</a>
         </p>
       </div>
@@ -59,8 +58,17 @@
 
   <footer>
     <div class="container">
-      <p>&copy; 2025 SCP Foundation. All rights reserved.</p>
+      <p>&copy; 2025 Фонд SCP. Усі права захищені.</p>
     </div>
   </footer>
+
+  <script>
+    // simple mobile menu toggle
+    const btn = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('.nav');
+    btn.addEventListener('click', () => {
+      nav.classList.toggle('open');
+    });
+  </script>
 </body>
 </html>

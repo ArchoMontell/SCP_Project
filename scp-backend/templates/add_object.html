@@ -1,28 +1,28 @@
 ﻿{% extends "base.html" %}
 {% block content %}
 <div class="card form">
-  <h2><i class="fas fa-cube"></i> REGISTER NEW ANOMALY</h2>
-  <p style="color: #b0b0b0; font-size: 12px; margin-bottom: 20px;">SCP object intake and classification</p>
+  <h2><i class="fas fa-cube"></i> РЕЄСТРАЦІЯ НОВОГО АНОМАЛЬНОГО ОБ'ЄКТА</h2>
+  <p style="color: #b0b0b0; font-size: 12px; margin-bottom: 20px;">Прийом об'єкта та його класифікація</p>
   <form method="POST">
     {{ form.hidden_tag() }}
     
     {{ form.name.label }}
-    {{ form.name(placeholder="SCP-XXXX designation or common name") }}
+    {{ form.name(placeholder="Позначення SCP-XXXX або загальна назва") }}
 
     {{ form.classification.label }}
     {{ form.classification(style="width:100%; padding:10px; margin:8px 0;") }}
 
     {{ form.description.label }}
-    {{ form.description(placeholder="Detailed description of the anomaly", rows="4") }}
+    {{ form.description(placeholder="Детальний опис аномалії", rows="4") }}
 
     {{ form.storage_requirements.label }}
-    {{ form.storage_requirements(placeholder="Special containment procedures", rows="4") }}
+    {{ form.storage_requirements(placeholder="Особливі процедури утримання", rows="4") }}
 
     {{ form.camera_id.label }}
     {{ form.camera_id(style="width:100%; padding:10px; margin:8px 0;") }}
 
     <div style="margin-top: 20px;">
-      {{ form.submit(value="REGISTER OBJECT") }}
+      {{ form.submit(value="ЗАРЕЄСТРУВАТИ ОБ'ЄКТ") }}
     </div>
   </form>
 </div>

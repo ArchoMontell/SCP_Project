@@ -1,8 +1,8 @@
 ﻿{% extends "base.html" %}
 {% block content %}
 <div class="card form">
-  <h2><i class="fas fa-edit"></i> MODIFY CONTAINMENT UNIT</h2>
-  <p style="color: #b0b0b0; font-size: 12px; margin-bottom: 20px;">Update facility parameters and schedules</p>
+  <h2><i class="fas fa-edit"></i> РЕДАГУВАННЯ ПІДРОЗДІЛУ</h2>
+  <p style="color: #b0b0b0; font-size: 12px; margin-bottom: 20px;">Оновіть параметри підрозділу та графіки</p>
   <form method="POST">
     {{ form.hidden_tag() }}
     
@@ -28,7 +28,7 @@
     {{ form.maintenance_schedule(rows="3") }}
 
     <div style="margin-top: 20px;">
-      {{ form.submit(value="UPDATE UNIT") }}
+      {{ form.submit(value="ОНОВИТИ ПІДРОЗДІЛ") }}
     </div>
   </form>
 </div>

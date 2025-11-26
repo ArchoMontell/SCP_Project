@@ -46,13 +46,13 @@ def create_app():
         if form.validate_on_submit():
             # check existing
             if User.query.filter((User.username == form.username.data) | (User.email == form.email.data)).first():
-                flash('User with that username or email already exists.', 'warning')
+                flash("Користувач з таким іменем або електронною адресою вже існує.", 'warning')
                 return render_template('register.html', form=form)
             user = User(username=form.username.data, email=form.email.data, role='user')
             user.set_password(form.password.data)
             db.session.add(user)
             db.session.commit()
-            flash('Registration successful. You can now log in.', 'success')
+            flash('Реєстрація успішна. Тепер ви можете увійти.', 'success')
             return redirect(url_for('login'))
         return render_template('register.html', form=form)
 
@@ -67,17 +67,17 @@ def create_app():
             user = User.query.filter((User.username == credential) | (User.email == credential)).first()
             if user and user.check_password(form.password.data):
                 login_user(user)
-                flash('Logged in successfully.', 'success')
+                flash('Успішний вхід.', 'success')
                 next_page = request.args.get('next')
                 return redirect(next_page or url_for('dashboard'))
-            flash('Invalid credentials.', 'danger')
+            flash('Невірні дані для входу.', 'danger')
         return render_template('login.html', form=form)
 
     @app.route('/logout')
     @login_required
     def logout():
         logout_user()
-        flash('Logged out.', 'info')
+        flash('Ви вийшли з системи.', 'info')
         return redirect(url_for('index'))
 
     @app.route('/dashboard')
@@ -92,7 +92,7 @@ def create_app():
     @login_required
     def admin_dashboard():
         if current_user.role != 'admin':
-            flash('Access denied.', 'danger')
+            flash('Доступ заборонено.', 'danger')
             return redirect(url_for('user_dashboard'))
         cameras = Camera.query.all()
         objects = ObjectItem.query.all()
@@ -120,7 +120,7 @@ def create_app():
             )
             db.session.add(camera)
             db.session.commit()
-            flash('Camera created successfully!', 'success')
+            flash('Підрозділ створено успішно!', 'success')
             return redirect(url_for('admin_dashboard'))
         return render_template('add_camera.html', form=form)
 
@@ -141,7 +141,7 @@ def create_app():
             camera.cleaning_schedule = form.cleaning_schedule.data
             camera.maintenance_schedule = form.maintenance_schedule.data
             db.session.commit()
-            flash('Camera updated successfully!', 'success')
+            flash('Підрозділ оновлено!', 'success')
             return redirect(url_for('admin_dashboard'))
         elif request.method == 'GET':
             form.name.data = camera.name
@@ -162,7 +162,7 @@ def create_app():
         camera = Camera.query.get_or_404(camera_id)
         db.session.delete(camera)
         db.session.commit()
-        flash('Camera deleted successfully!', 'success')
+        flash('Підрозділ видалено!', 'success')
         return redirect(url_for('admin_dashboard'))
 
     # Object Management
@@ -174,7 +174,7 @@ def create_app():
             return redirect(url_for('user_dashboard'))
         form = ObjectForm()
         cameras = Camera.query.all()
-        form.camera_id.choices = [(0, '-- Select Camera --')] + [(c.id, c.name) for c in cameras]
+        form.camera_id.choices = [(0, '-- Виберіть підрозділ --')] + [(c.id, c.name) for c in cameras]
         if form.validate_on_submit():
             obj = ObjectItem(
                 name=form.name.data,
@@ -185,7 +185,7 @@ def create_app():
             )
             db.session.add(obj)
             db.session.commit()
-            flash('Object created successfully!', 'success')
+            flash('Об\'єкт створено успішно!', 'success')
             return redirect(url_for('admin_dashboard'))
         return render_template('add_object.html', form=form)
 
@@ -206,7 +206,7 @@ def create_app():
             obj.storage_requirements = form.storage_requirements.data
             obj.camera_id = form.camera_id.data if form.camera_id.data and form.camera_id.data != 0 else None
             db.session.commit()
-            flash('Object updated successfully!', 'success')
+            flash('Об\'єкт оновлено!', 'success')
             return redirect(url_for('admin_dashboard'))
         elif request.method == 'GET':
             form.name.data = obj.name
@@ -225,7 +225,7 @@ def create_app():
         obj = ObjectItem.query.get_or_404(object_id)
         db.session.delete(obj)
         db.session.commit()
-        flash('Object deleted successfully!', 'success')
+        flash('Об\'єкт видалено!', 'success')
         return redirect(url_for('admin_dashboard'))
 
     # Event Logging
@@ -244,7 +244,7 @@ def create_app():
             )
             db.session.add(event)
             db.session.commit()
-            flash('Event logged successfully!', 'success')
+            flash('Подію зареєстровано!', 'success')
             return redirect(url_for('admin_dashboard'))
         return render_template('add_event.html', form=form)
 
@@ -269,7 +269,7 @@ def create_app():
     def user_add_object():
         form = ObjectForm()
         cameras = Camera.query.all()
-        form.camera_id.choices = [(0, '-- Select Camera --')] + [(c.id, c.name) for c in cameras]
+        form.camera_id.choices = [(0, '-- Виберіть підрозділ --')] + [(c.id, c.name) for c in cameras]
         if form.validate_on_submit():
             obj = ObjectItem(
                 name=form.name.data,
@@ -280,7 +280,7 @@ def create_app():
             )
             db.session.add(obj)
             db.session.commit()
-            flash('Object added successfully!', 'success')
+            flash('Об\'єкт додано успішно!', 'success')
             return redirect(url_for('user_dashboard'))
         return render_template('user_add_object.html', form=form)
 
@@ -292,13 +292,13 @@ def create_app():
         email = os.environ.get('ADMIN_EMAIL', 'admin@example.com')
         password = os.environ.get('ADMIN_PASS', 'adminpass')
         if User.query.filter_by(username=username).first():
-            print('Admin already exists.')
+            print('Адміністратор вже існує.')
             return
         admin = User(username=username, email=email, role='admin')
         admin.set_password(password)
         db.session.add(admin)
         db.session.commit()
-        print('Admin created.')
+        print('Адміністратора створено.')
 
     # Admin: edit user (role + access_level)
     @app.route('/admin/user/edit/<int:user_id>', methods=['GET', 'POST'])
@@ -316,7 +316,7 @@ def create_app():
             except Exception:
                 user.access_level = 0
             db.session.commit()
-            flash('User updated.', 'success')
+            flash('Користувача оновлено.', 'success')
             return redirect(url_for('admin_dashboard'))
         elif request.method == 'GET':
             form.role.data = user.role

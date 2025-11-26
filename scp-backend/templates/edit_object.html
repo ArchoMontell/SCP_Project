@@ -1,8 +1,8 @@
 ﻿{% extends "base.html" %}
 {% block content %}
 <div class="card form">
-  <h2><i class="fas fa-edit"></i> MODIFY ANOMALY RECORD</h2>
-  <p style="color: #b0b0b0; font-size: 12px; margin-bottom: 20px;">Update SCP object classification and storage details</p>
+  <h2><i class="fas fa-edit"></i> РЕДАГУВАННЯ ЗАПИСУ ОБ'ЄКТА</h2>
+  <p style="color: #b0b0b0; font-size: 12px; margin-bottom: 20px;">Оновіть класифікацію та параметри зберігання об'єкта</p>
   <form method="POST">
     {{ form.hidden_tag() }}
     
@@ -22,7 +22,7 @@
     {{ form.camera_id(style="width:100%; padding:10px; margin:8px 0;") }}
 
     <div style="margin-top: 20px;">
-      {{ form.submit(value="SAVE CHANGES") }}
+      {{ form.submit(value="ЗБЕРЕГТИ ЗМІНИ") }}
     </div>
   </form>
 </div>

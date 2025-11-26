@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="uk">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>{{ title or "SCP Foundation Database" }}</title>
+  <title>{{ title or "База Даних Фонду SCP" }}</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -159,16 +159,16 @@
 <body>
   <header>
     <div class="container">
-      <h1><i class="fas fa-lock"></i> SCP FOUNDATION</h1>
+      <h1><i class="fas fa-lock"></i> Фонд SCP</h1>
       <nav>
         <ul>
-          <li><a href="{{ url_for('index') }}"><i class="fas fa-home"></i> Home</a></li>
+          <li><a href="{{ url_for('index') }}"><i class="fas fa-home"></i> Головна</a></li>
           {% if current_user.is_authenticated %}
-            <li><a href="{{ url_for('dashboard') }}"><i class="fas fa-chart-line"></i> Dashboard</a></li>
-            <li><a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            <li><a href="{{ url_for('dashboard') }}"><i class="fas fa-chart-line"></i> Панель</a></li>
+            <li><a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Вийти</a></li>
           {% else %}
-            <li><a href="{{ url_for('login') }}"><i class="fas fa-sign-in-alt"></i> Login</a></li>
-            <li><a href="{{ url_for('register') }}"><i class="fas fa-user-plus"></i> Register</a></li>
+            <li><a href="{{ url_for('login') }}"><i class="fas fa-sign-in-alt"></i> Увійти</a></li>
+            <li><a href="{{ url_for('register') }}"><i class="fas fa-user-plus"></i> Реєстрація</a></li>
           {% endif %}
         </ul>
       </nav>
@@ -193,8 +193,8 @@
 
   <footer>
     <div class="container">
-      <p>&copy; 2025 SCP Foundation Database System | Secure Containment Protocol</p>
-      <p style="font-size: 12px; margin-top: 8px;">⚠️ Unauthorized access is monitored and will be reported</p>
+      <p>&copy; 2025 База Даних Фонду SCP | Протокол Безпечного Утримання</p>
+      <p style="font-size: 12px; margin-top: 8px;">⚠️ Несанкціонований доступ відстежується та буде зафіксований</p>
     </div>
   </footer>
 </body>

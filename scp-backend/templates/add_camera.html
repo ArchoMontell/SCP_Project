@@ -1,13 +1,13 @@
 ﻿{% extends "base.html" %}
 {% block content %}
 <div class="card form">
-  <h2><i class="fas fa-camera-alt"></i> CREATE CONTAINMENT UNIT</h2>
-  <p style="color: #b0b0b0; font-size: 12px; margin-bottom: 20px;">Configure a new surveillance and storage facility</p>
+  <h2><i class="fas fa-camera-alt"></i> СТВОРИТИ ПІДРОЗДІЛ УТРИМАННЯ</h2>
+  <p style="color: #b0b0b0; font-size: 12px; margin-bottom: 20px;">Налаштуйте новий підрозділ спостереження та зберігання</p>
   <form method="POST">
     {{ form.hidden_tag() }}
     
     {{ form.name.label }}
-    {{ form.name(placeholder="e.g., Sector 7-B Vault") }}
+    {{ form.name(placeholder="Напр.: Сектор 7-B Сейф") }}
 
     {{ form.type.label }}
     {{ form.type() }}
@@ -29,7 +29,7 @@
     {{ form.maintenance_schedule(placeholder="Preventive maintenance timeline", rows="3") }}
 
     <div style="margin-top: 20px;">
-      {{ form.submit(value="CREATE UNIT") }}
+      {{ form.submit(value="СТВОРИТИ ПІДРОЗДІЛ") }}
     </div>
   </form>
 </div>
