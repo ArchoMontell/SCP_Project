@@ -10,23 +10,27 @@
   {% endif %}
   
   <h3>Об'єкти в цьому підрозділі</h3>
-  <table style="width:100%; border-collapse:collapse; background:#f9f9f9;">
-    <tr style="background:#ddd; font-weight:bold;">
-      <td style="padding:10px; border:1px solid #999;">Назва</td>
-      <td style="padding:10px; border:1px solid #999;">Класифікація</td>
-      <td style="padding:10px; border:1px solid #999;">Статус</td>
-    </tr>
-    {% if objects %}
-      {% for obj in objects %}
-      <tr>
-        <td style="padding:10px; border:1px solid #ccc;">{{ obj.name }}</td>
-        <td style="padding:10px; border:1px solid #ccc;">{{ obj.classification }}</td>
-        <td style="padding:10px; border:1px solid #ccc;">{{ obj.status }}</td>
+  <table style="width:100%; border-collapse:collapse;">
+    <thead>
+      <tr style="background:#1a1f3a; font-weight:bold;">
+        <th style="padding:10px; border:1px solid #ffd70066; color: #ffd700;">Назва</th>
+        <th style="padding:10px; border:1px solid #ffd70066; color: #ffd700;">Класифікація</th>
+        <th style="padding:10px; border:1px solid #ffd70066; color: #ffd700;">Статус</th>
       </tr>
-      {% endfor %}
-    {% else %}
-      <tr><td colspan="3" style="padding:10px; text-align:center;">У цьому підрозділі немає об'єктів</td></tr>
-    {% endif %}
+    </thead>
+    <tbody>
+      {% if objects %}
+        {% for obj in objects %}
+        <tr style="background:#0a0e27;">
+          <td style="padding:10px; border:1px solid #ffd70033; color: #e0e0e0;">{{ obj.name }}</td>
+          <td style="padding:10px; border:1px solid #ffd70033; color: #e0e0e0;">{{ obj.classification }}</td>
+          <td style="padding:10px; border:1px solid #ffd70033; color: #e0e0e0;">{{ obj.status }}</td>
+        </tr>
+        {% endfor %}
+      {% else %}
+        <tr><td colspan="3" style="padding:10px; text-align:center; color: #b0b0b0;">У цьому підрозділі немає об'єктів</td></tr>
+      {% endif %}
+    </tbody>
   </table>
   
   <p style="margin-top:20px;">
