@@ -1,14 +1,20 @@
 ﻿{% extends "base.html" %}
 {% block content %}
 <div class="card form">
-  <h2>Log Event</h2>
+  <h2><i class="fas fa-clipboard-list"></i> LOG SYSTEM EVENT</h2>
+  <p style="color: #b0b0b0; font-size: 12px; margin-bottom: 20px;">Record incident, maintenance, or access event</p>
   <form method="POST">
     {{ form.hidden_tag() }}
+    
     {{ form.type.label }}
-    {{ form.type() }}
+    {{ form.type(placeholder="e.g., Containment Breach, Maintenance, Inspection") }}
+
     {{ form.notes.label }}
-    {{ form.notes() }}
-    {{ form.submit() }}
+    {{ form.notes(placeholder="Detailed description of the event...", rows="6") }}
+
+    <div style="margin-top: 20px;">
+      {{ form.submit(value="LOG EVENT") }}
+    </div>
   </form>
 </div>
 {% endblock %}

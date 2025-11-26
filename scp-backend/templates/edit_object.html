@@ -1,20 +1,29 @@
 ﻿{% extends "base.html" %}
 {% block content %}
 <div class="card form">
-  <h2>Edit Object</h2>
+  <h2><i class="fas fa-edit"></i> MODIFY ANOMALY RECORD</h2>
+  <p style="color: #b0b0b0; font-size: 12px; margin-bottom: 20px;">Update SCP object classification and storage details</p>
   <form method="POST">
     {{ form.hidden_tag() }}
+    
     {{ form.name.label }}
     {{ form.name() }}
+
     {{ form.classification.label }}
     {{ form.classification(style="width:100%; padding:10px; margin:8px 0;") }}
+
     {{ form.description.label }}
-    {{ form.description() }}
+    {{ form.description(rows="4") }}
+
     {{ form.storage_requirements.label }}
-    {{ form.storage_requirements() }}
+    {{ form.storage_requirements(rows="4") }}
+
     {{ form.camera_id.label }}
     {{ form.camera_id(style="width:100%; padding:10px; margin:8px 0;") }}
-    {{ form.submit() }}
+
+    <div style="margin-top: 20px;">
+      {{ form.submit(value="SAVE CHANGES") }}
+    </div>
   </form>
 </div>
 {% endblock %}

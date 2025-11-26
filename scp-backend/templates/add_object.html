@@ -1,20 +1,29 @@
 ﻿{% extends "base.html" %}
 {% block content %}
 <div class="card form">
-  <h2>Add Object</h2>
+  <h2><i class="fas fa-cube"></i> REGISTER NEW ANOMALY</h2>
+  <p style="color: #b0b0b0; font-size: 12px; margin-bottom: 20px;">SCP object intake and classification</p>
   <form method="POST">
     {{ form.hidden_tag() }}
+    
     {{ form.name.label }}
-    {{ form.name() }}
+    {{ form.name(placeholder="SCP-XXXX designation or common name") }}
+
     {{ form.classification.label }}
     {{ form.classification(style="width:100%; padding:10px; margin:8px 0;") }}
+
     {{ form.description.label }}
-    {{ form.description() }}
+    {{ form.description(placeholder="Detailed description of the anomaly", rows="4") }}
+
     {{ form.storage_requirements.label }}
-    {{ form.storage_requirements() }}
+    {{ form.storage_requirements(placeholder="Special containment procedures", rows="4") }}
+
     {{ form.camera_id.label }}
     {{ form.camera_id(style="width:100%; padding:10px; margin:8px 0;") }}
-    {{ form.submit() }}
+
+    <div style="margin-top: 20px;">
+      {{ form.submit(value="REGISTER OBJECT") }}
+    </div>
   </form>
 </div>
 {% endblock %}

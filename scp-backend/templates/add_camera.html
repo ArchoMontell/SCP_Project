@@ -1,24 +1,36 @@
 ﻿{% extends "base.html" %}
 {% block content %}
 <div class="card form">
-  <h2>Add Camera</h2>
+  <h2><i class="fas fa-camera-alt"></i> CREATE CONTAINMENT UNIT</h2>
+  <p style="color: #b0b0b0; font-size: 12px; margin-bottom: 20px;">Configure a new surveillance and storage facility</p>
   <form method="POST">
     {{ form.hidden_tag() }}
+    
     {{ form.name.label }}
-    {{ form.name() }}
+    {{ form.name(placeholder="e.g., Sector 7-B Vault") }}
+
     {{ form.type.label }}
     {{ form.type() }}
+
     {{ form.max_capacity.label }}
-    {{ form.max_capacity() }}
+    {{ form.max_capacity(placeholder="Maximum items that can be stored") }}
+
     {{ form.security_level.label }}
-    {{ form.security_level() }}
+    {{ form.security_level(min="0", max="5", placeholder="0 = Unrestricted, 5 = Maximum") }}
+
+    <label style="margin-top: 16px;">Equipment & Specifications</label>
     {{ form.equipment_list.label }}
-    {{ form.equipment_list() }}
+    {{ form.equipment_list(placeholder="List cameras, monitors, sensors, etc.", rows="4") }}
+
     {{ form.cleaning_schedule.label }}
-    {{ form.cleaning_schedule() }}
+    {{ form.cleaning_schedule(placeholder="Weekly maintenance schedule", rows="3") }}
+
     {{ form.maintenance_schedule.label }}
-    {{ form.maintenance_schedule() }}
-    {{ form.submit() }}
+    {{ form.maintenance_schedule(placeholder="Preventive maintenance timeline", rows="3") }}
+
+    <div style="margin-top: 20px;">
+      {{ form.submit(value="CREATE UNIT") }}
+    </div>
   </form>
 </div>
 {% endblock %}

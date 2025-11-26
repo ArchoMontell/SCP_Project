@@ -1,24 +1,35 @@
 ﻿{% extends "base.html" %}
 {% block content %}
 <div class="card form">
-  <h2>Edit Camera</h2>
+  <h2><i class="fas fa-edit"></i> MODIFY CONTAINMENT UNIT</h2>
+  <p style="color: #b0b0b0; font-size: 12px; margin-bottom: 20px;">Update facility parameters and schedules</p>
   <form method="POST">
     {{ form.hidden_tag() }}
+    
     {{ form.name.label }}
     {{ form.name() }}
+
     {{ form.type.label }}
     {{ form.type() }}
+
     {{ form.max_capacity.label }}
     {{ form.max_capacity() }}
+
     {{ form.security_level.label }}
-    {{ form.security_level() }}
+    {{ form.security_level(min="0", max="5") }}
+
     {{ form.equipment_list.label }}
-    {{ form.equipment_list() }}
+    {{ form.equipment_list(rows="4") }}
+
     {{ form.cleaning_schedule.label }}
-    {{ form.cleaning_schedule() }}
+    {{ form.cleaning_schedule(rows="3") }}
+
     {{ form.maintenance_schedule.label }}
-    {{ form.maintenance_schedule() }}
-    {{ form.submit() }}
+    {{ form.maintenance_schedule(rows="3") }}
+
+    <div style="margin-top: 20px;">
+      {{ form.submit(value="UPDATE UNIT") }}
+    </div>
   </form>
 </div>
 {% endblock %}
